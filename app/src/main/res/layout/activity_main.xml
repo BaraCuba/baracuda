@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".Ui.MainActivity">
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -38,6 +38,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginRight="5dp"
             android:layout_weight="10"
+            android:onClick="onClick"
             android:text="Search"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
