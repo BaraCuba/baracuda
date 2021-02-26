@@ -8,13 +8,18 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.searchingrepository.DataRepository
 import com.example.searchingrepository.R
+import com.example.searchingrepository.Users
+import com.google.gson.Gson
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import retrofit2.Call
+import retrofit2.Response
+import javax.security.auth.callback.Callback
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
-    private var recyclerView: RecyclerView? = null
     private var buttonSearch: Button? = null
     private var textLink: TextView? = null
 
@@ -32,16 +37,21 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View?) {
 
-        val repository = SearchRepositoryProvider.provideSearchRepository()
-        repository.searchUsers("Omsk", "Java")
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .subscribe ({
-                    result ->
-                Log.d("Result", "There are ${result.items.size} Java developers in Lagos")
-            }, { error ->
-                error.printStackTrace()
-            })
+        val postService = DataRepository.create()
 
+        postService.getUser(textLink?.text as String).enqueue(object : Callback<Users> {
+            fun onFailure(call: Call<Users>?, t: Throwable?) {
+                Log.e("LogUrl","gagal ${t}")
+            }
+
+            fun onResponse(call: Call<String>?, response: Response<String>?) {
+                val responseBody = response?.body()
+                Log.e("LogUrl","response body as string = ${responseBody}")
+
+                val user: Users = Gson().fromJson(responseBody, Users::class.java)
+            }
+
+
+        })
     }
 }
