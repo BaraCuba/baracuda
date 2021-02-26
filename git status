@@ -1,0 +1,95 @@
+[33mcommit 0879b4737ec5a14388240a022bb185feb3400d32[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m
+Author: BaraCuba <baranovskiy.sergey.rus@gmail.com>
+Date:   Wed Feb 17 14:25:36 2021 +0300
+
+    comment
+
+[1mdiff --git a/app/src/main/java/com/example/searchingrepository/MainActivity.kt b/app/src/main/java/com/example/searchingrepository/MainActivity.kt[m
+[1mindex a27c686..201f394 100644[m
+[1m--- a/app/src/main/java/com/example/searchingrepository/MainActivity.kt[m
+[1m+++ b/app/src/main/java/com/example/searchingrepository/MainActivity.kt[m
+[36m@@ -1,11 +1,54 @@[m
+ package com.example.searchingrepository[m
+ [m
+[32m+[m[32mimport android.content.Context[m
+ import androidx.appcompat.app.AppCompatActivity[m
+ import android.os.Bundle[m
+[32m+[m[32mimport android.view.View[m
+[32m+[m[32mimport android.widget.Button[m
+[32m+[m[32mimport android.widget.TextView[m
+[32m+[m[32mimport androidx.recyclerview.widget.LinearLayoutManager[m
+[32m+[m[32mimport androidx.recyclerview.widget.RecyclerView[m
+[32m+[m[32mimport org.jsoup.Jsoup[m
+[32m+[m[32mimport java.io.IOException[m
+[32m+[m
+[32m+[m[32mclass MainActivity : AppCompatActivity(), View.OnClickListener{[m
+[32m+[m
+[32m+[m[32m    private val parseItems = ArrayList<ParseItem>()[m
+[32m+[m[32m    private val recyclerView: RecyclerView? = null[m
+[32m+[m[32m    private val buttonSearch: Button? = null[m
+[32m+[m[32m    private val textLink: TextView? = null[m
+[32m+[m[32m    private val adapter: ParseAdapter? = null[m
+[32m+[m
+ [m
+[31m-class MainActivity : AppCompatActivity() {[m
+     override fun onCreate(savedInstanceState: Bundle?) {[m
+         super.onCreate(savedInstanceState)[m
+         setContentView(R.layout.activity_main)[m
+[32m+[m
+[32m+[m[32m        val buttonSearch = findViewById<View>(R.id.buttonSearch) as Button[m
+[32m+[m[32m        val textLink = findViewById<View>(R.id.textRepositoryLink) as TextView[m
+[32m+[m[32m        val recyclerView = findViewById<View>(R.id.recyclerViewList) as RecyclerView[m
+[32m+[m[32m        recyclerView!!.layoutManager = LinearLayoutManager(this)[m
+[32m+[m[32m        val adapter: ParseAdapter = ParseAdapter(parseItems,this)[m
+[32m+[m[32m        recyclerView!!.adapter = adapter[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    override fun onClick(v: View?) {[m
+[32m+[m[32m        parseItems.clear()[m
+[32m+[m[32m        val context: Context[m
+[32m+[m[32m        textLink!!.text = ""[m
+[32m+[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    private inner class Context {[m
+[32m+[m[32m        override fun doInBackground(vararg params: Void): Void?{[m
+[32m+[m[32m            try {[m
+[32m+[m[32m                val doc = Jsoup.connect(textLink!!.text.toString()).get()[m
+[32m+[m
+[32m+[m
+[32m+[m[32m            }catch(e: IOException){[m
+[32m+[m[32m                e.printStackTrace()[m
+[32m+[m[32m            }[m
+[32m+[m[32m            return null[m
+[32m+[m[32m        }[m
+     }[m
+ }[m
+\ No newline at end of file[m
+[1mdiff --git a/app/src/main/java/com/example/searchingrepository/ParseAdapter.kt b/app/src/main/java/com/example/searchingrepository/ParseAdapter.kt[m
+[1mnew file mode 100644[m
+[1mindex 0000000..4c20e51[m
+[1m--- /dev/null[m
+[1m+++ b/app/src/main/java/com/example/searchingrepository/ParseAdapter.kt[m
+[36m@@ -0,0 +1,5 @@[m
+[32m+[m[32mpackage com.example.searchingrepository[m
+[32m+[m
+[32m+[m[32mclass ParseAdapter ([m
+[32m+[m
+[32m+[m[32m)[m
+\ No newline at end of file[m
+[1mdiff --git a/app/src/main/java/com/example/searchingrepository/ParseItem.kt b/app/src/main/java/com/example/searchingrepository/ParseItem.kt[m
+[1mnew file mode 100644[m
+[1mindex 0000000..f8d8c1b[m
+[1m--- /dev/null[m
+[1m+++ b/app/src/main/java/com/example/searchingrepository/ParseItem.kt[m
+[36m@@ -0,0 +1,9 @@[m
+[32m+[m[32mpackage com.example.searchingrepository[m
+[32m+[m
+[32m+[m[32mclass ParseItem ([m
+[32m+[m[32m        var buttonSearch : String[m
+[32m+[m[32m        var buttonSearch : String[m
+[32m+[m[32m        var buttonSearch : String[m
+[32m+[m[32m        var buttonSearch : String[m
+[32m+[m[32m        var buttonSearch : String[m
+[32m+[m[32m)[m
+\ No newline at end of file[m

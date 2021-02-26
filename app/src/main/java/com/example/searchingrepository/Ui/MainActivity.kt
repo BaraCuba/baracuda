@@ -7,13 +7,11 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
-import androidx.recyclerview.widget.RecyclerView
-import com.example.searchingrepository.DataRepository
+import com.example.searchingrepository.DataRepositoryApp
 import com.example.searchingrepository.R
-import com.example.searchingrepository.Users
+import com.example.searchingrepository.Ui.List.ListFragment
+import com.example.searchingrepository.models.Users
 import com.google.gson.Gson
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import retrofit2.Call
 import retrofit2.Response
 import javax.security.auth.callback.Callback
@@ -32,26 +30,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         buttonSearch = findViewById<View>(R.id.buttonSearch) as Button
         textLink = findViewById<View>(R.id.textRepositoryLink) as TextView
 
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.recyclerViewList, ListFragment())
+            .commit()
 
     }
 
     override fun onClick(v: View?) {
 
-        val postService = DataRepository.create()
-
-        postService.getUser(textLink?.text as String).enqueue(object : Callback<Users> {
-            fun onFailure(call: Call<Users>?, t: Throwable?) {
-                Log.e("LogUrl","gagal ${t}")
-            }
-
-            fun onResponse(call: Call<String>?, response: Response<String>?) {
-                val responseBody = response?.body()
-                Log.e("LogUrl","response body as string = ${responseBody}")
-
-                val user: Users = Gson().fromJson(responseBody, Users::class.java)
-            }
 
 
-        })
     }
 }
